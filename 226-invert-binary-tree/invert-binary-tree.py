@@ -10,20 +10,31 @@ class Solution:
         if not root:
             return None
         
-        head = root
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+        self.invertTree(root.left)
+        self.invertTree(root.right)
 
-        q = [root]
+        return root
 
-        while q:
+        # if not root:
+        #     return None
+        
+        # head = root
 
-            data = q.pop(0)
-            temp = data.left if data.left else None
-            data.left = data.right if data.right else None
-            data.right = temp
+        # q = [root]
 
-            if data.left:
-                q.append(data.left)
-            if data.right:
-                q.append(data.right)
-        return head
+        # while q:
+
+        #     data = q.pop(0)
+        #     temp = data.left if data.left else None
+        #     data.left = data.right if data.right else None
+        #     data.right = temp
+
+        #     if data.left:
+        #         q.append(data.left)
+        #     if data.right:
+        #         q.append(data.right)
+        # return head
         
