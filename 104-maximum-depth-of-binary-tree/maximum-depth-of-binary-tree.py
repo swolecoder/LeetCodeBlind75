@@ -14,7 +14,7 @@ class Solution:
         q = [(root, 1)]
 
         while q:
-            data = q.pop()
+            data = q.pop(0)
             h = data[1]
 
             ans = max(ans, h)
