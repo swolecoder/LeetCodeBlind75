@@ -1,4 +1,5 @@
 class Solution:
+    # O(n*m) dfs 4 ^ len(word)
     def exist(self, board: List[List[str]], word: str) -> bool:
         ROW = len(board)
         COL = len(board[0])
