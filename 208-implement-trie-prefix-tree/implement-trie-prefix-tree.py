@@ -1,11 +1,9 @@
 class Trie:
 
     def __init__(self):
-        self.map = {}
-        
+        self. map = {}
 
     def insert(self, word: str) -> None:
-
         root = self.map
 
         for w in word:
@@ -17,26 +15,25 @@ class Trie:
 
     def search(self, word: str) -> bool:
 
-        root  = self.map
+        root = self.map
 
         for w in word:
             if w not in root:
                 return False
             root = root[w]
-        print("Ashish",root)
         return True if "end" in root else False
+
         
 
     def startsWith(self, prefix: str) -> bool:
-
-        root = self.map
+        
+        root = self.map 
 
         for w in prefix:
-            if w  not in root:
+            if w not in root:
                 return False
             root = root[w]
-        return True
-        
+        return True 
 
 
 # Your Trie object will be instantiated and called as such:
