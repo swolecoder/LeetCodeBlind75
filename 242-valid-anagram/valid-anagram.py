@@ -1,24 +1,23 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        
         map = {}
 
-        if len(s) != len(t):
-            return False
+        if len(s)!= len(t): return False
 
         for i in range(len(s)):
-            map[s[i]] = 1+ map.get(s[i], 0)
-        print(map)
-        for i in range(len(t)):
-
-            if t[i] not in map or map[t[i]] < 0:
-                print(t[i],map)
-                return False
-            
-            map[t[i]] = map.get(t[i],0) -1
-        print(map)
+            map[s[i]] = map.get(s[i], 0) + 1
         
-        for key, val in map.items():
-            if val > 0:
-                return False
-        return True
+        for j in range(len(t)):
+
+            map[t[j]] = map.get(t[j], 0) -1
+
+            if map[t[j]] <= 0:
+                del map[t[j]]
+        
+
+    
+        
+        print(map)
+
+        return True if len(map.keys()) <= 0 else False
+        
