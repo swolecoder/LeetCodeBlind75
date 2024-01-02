@@ -10,10 +10,11 @@ class MyStack:
         
 
     def pop(self) -> int:
-        for i in range(len(self.stack)-1):
-            self.stack.append(self.stack.popleft())
-        return self.stack.popleft()
-        
+        # for i in range(len(self.stack)-1):
+        #     self.stack.append(self.stack.popleft())
+        return self.stack.pop()
+        # [1,2,3]
+        # [1,2,3]
 
     def top(self) -> int:
         return self.stack[-1]
