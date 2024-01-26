@@ -8,7 +8,7 @@ class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
 
         def dfs(l,r):
-            if l > r:
+            if l >r:
                 return None
             mid = (l+r) //2
 
