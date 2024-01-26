@@ -7,28 +7,26 @@
 class Solution:
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
 
-        def sameTree(p,q):
+        def dfs(p,q):
             if not p and not q:
                 return True
-
             if p and not q:
                 return False
-
             if not p and q:
                 return False
-
             if p.val != q.val:
                 return False
-
-            return sameTree(p.left , q.left) and sameTree(p.right, q.right)
-
-
-        if sameTree(root, subRoot):
+            left = dfs(p.left, q.left)
+            right = dfs(p.right, q.right)
+            return left and right
+        
+        if dfs(root, subRoot):
             return True
-
         if root and not subRoot:
             return False
         if not root and subRoot:
             return False
-
-        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)        
+        left = self.isSubtree(root.left, subRoot)
+        right = self.isSubtree(root.right, subRoot)
+        return left or right
+        
