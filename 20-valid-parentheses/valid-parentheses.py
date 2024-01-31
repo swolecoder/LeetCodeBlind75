@@ -7,18 +7,18 @@ class Solution:
             "{":"}"
         }
 
-
         stack = []
 
-        for i in range(len(s)):
-            if s[i] in map:
-                stack.append(s[i])
+        for n in s:
+            if n in map:
+                stack.append(n)
             else:
-
                 if not stack:
+                    print("I am here")
                     return False
-                if stack and map[stack.pop()] != s[i]:
+                last = stack.pop()
+                if  map[last] != n:
                     return False
-        
-        return True if len(stack) == 0 else False
+        print(stack)
+        return len(stack) == 0
         
