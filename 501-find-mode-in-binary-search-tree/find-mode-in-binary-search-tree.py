@@ -19,24 +19,19 @@ class Solution:
                 return 
             
             helper(root.left)
-
+            #update seen and c
             if seen == root.val:
                 c +=1
             else:
                 c = 1
                 seen = root.val
-            
+            #update ans 
             if c > m:
                 m = c
                 ans = [root.val]
             elif c == m:
                 ans.append(root.val)
 
-                
-
-
-       
-            print(ans)
             helper(root.right)
         
         helper(root)
