@@ -5,30 +5,31 @@ class Codec:
 
         res = ""
 
-        for strs in strs:
-            res += str(len(strs)) + "#"+ strs
+        for word in strs:
+            res += str(len(word)) + "#" + word
+        print(res)
         return res
         
 
     def decode(self, s: str) -> List[str]:
         """Decodes a single string to a list of strings.
         """
+        res = []
 
-        res , i = [], 0
-        print(s)
+        i = 0
         while i < len(s):
-
-            j = i 
-            print(i)
-            while s[j] != "#" and j < len(s):
-                j +=1
-            length = int(s[i:j])
-            res.append(s[j+1 : j+1 + length])
-            i = j + length +1
-        
-        return res
+            j = i
+            while i < len(s) and s[i] != "#":
+                i +=1
             
-
+            # not i is pinting at # so get teh number 
+            length = s[j :i]
+            word_found = s[i +1 : i + int(length) +1]
+            print(word_found)
+            res.append(word_found)
+            i = i + int(length)+1
+        return res 
+                
         
 
 
