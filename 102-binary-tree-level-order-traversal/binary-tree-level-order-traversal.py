@@ -4,28 +4,23 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-import collections
+
+from collections import defaultdict
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        
-        if not root:
-            return []
+
         map = defaultdict(list)
 
-        q = [(root ,0)]
+        def helper(node,level, map):
+            if not node:
+                return None
+            
+            map[level].append(node.val)
 
-
-        while q:
-
-            data = q.pop(0)
-            val, level = data[0], data[1]
-            map[level].append(val.val)
-
-            if val.left:
-                q.append((val.left, level +1))
-            if val.right:
-                q.append((val.right, level +1))
-        print(map)
-        return [ v for k, v in map.items()]
+            helper(node.left, level +1, map)
+            helper(node.right, level +1, map)
         
-        # return  [v] for k,v in map.items()
+        helper(root, 0, map)
+
+        return map.values()
+        
