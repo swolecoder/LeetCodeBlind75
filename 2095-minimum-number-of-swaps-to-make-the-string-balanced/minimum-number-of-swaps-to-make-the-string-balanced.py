@@ -11,5 +11,5 @@ class Solution:
 
 
 
-        return (ans +1 ) //2
+        return ceil(ans/2)
         
