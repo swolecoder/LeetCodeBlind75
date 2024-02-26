@@ -42,36 +42,18 @@
 #        """
 
 class Solution:
+    def __init__(self):
+        self.ans = 0
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        # depth = 1
+        self.depth(nestedList)
+        return self.ans
 
-        # q =nestedList
-        # ans = 0
+    def depth(self, nums, level=1):
 
-        # while q:
-        #     length = len(q)
-        #     nextItem= []
-        #     for i in range(length):
-        #         data = q.pop(0)
-        #         if data.isInteger():
-        #             ans += data.getInteger() * depth
-        #         else:
-        #             nextItem.extend(data.getList())
-        #     q = nextItem
-        #     depth +=1
-        # return ans
-        ans = 0
-
-        def dfs(items, depth=1):
-            nonlocal ans
-
-            for item in items:
-                if item.isInteger():
-                    ans += item.getInteger() * depth
-                else:
-                    dfs(item.getList(), depth +1)
-        dfs(nestedList)
-        return ans
-
+        for n in nums:
+            if n.isInteger():
+                self.ans += n.getInteger() * level
+            else:
+                self.depth(n.getList(), level + 1)
 
         
