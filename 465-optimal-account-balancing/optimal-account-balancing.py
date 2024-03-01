@@ -17,8 +17,7 @@ class Solution:
                 data.pop(0)
             if not data:
                 return 0
-            if len(data) == 1 and data[0] ==0:
-                return 0
+
             
             count = float("inf")
 
