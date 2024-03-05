@@ -4,25 +4,50 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
+# whebe ver we move left MIN , node.val right, node.val, MAX
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-
-        def helper(root, leftMax= float("-inf"), rightMax =float("inf")):
-            if not root:
-                return True
+        return self.validate(root,float("-inf"),float("inf"))
+        
+        
+        
+    def validate(self,node, left,right):
+        if not node:
+            return True
+        
+        if not node.val < right or not node.val >left:
+            return False
+        
+        left = self.validate(node.left,left,node.val)
+        right = self.validate(node.right,node.val , right)
+        
+        
+        
+        return left and right
+#         inOrder = self._isValidBST(root)
+#         print(inOrder)
+        
+#         if not inOrder:
+#             return True
+        
+#         for i in range(1,len(inOrder)):
+#             prev = inOrder[i-1]
+#             curr = inOrder[i]
             
-            # check
-            if not(root.val > leftMax and root.val < rightMax):
-                return False
-
-            left = helper(root.left, leftMax, root.val)
-            right = helper(root.right, root.val, rightMax)
-
-            return left and right
-        return helper(root)
-
-#     - 100 , 100
-
-#             2
-#       1.                 3
-# -100, Node.val       Node.val , 100(Keep as parent)  
+#             if curr > prev:
+#                 continue
+#             else:
+#                 return False
+#         return True
+    
+    
+#     def _isValidBST(self,root):
+#         if not root:
+#             return []
+        
+#         left = self._isValidBST(root.left)
+#         right = self._isValidBST(root.right)
+#         return left + [root.val] + right
+        
