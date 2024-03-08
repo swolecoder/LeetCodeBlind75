@@ -1,21 +1,21 @@
 from collections import defaultdict
 class Solution:
     def findDuplicate(self, paths: List[str]) -> List[List[str]]:
+        hashMap = defaultdict(list)
 
-        map = defaultdict(list)
+
 
         for path in paths:
-            # print(path)
-            
-            splitData = path.split(" ")
-            root = splitData[0]
-            for data in splitData[1:]:
-                # print(data)
-                file_name, content = data.split("(")
-                # print(data)
-                print(file_name, content[:-1])
-                map[content[:-1]].append(f"{root}/{file_name}")
-        print(map)
+            rest = path.split(" ")  
+            dir= rest[0]
 
-        return [ value for value in map.values() if len(value) > 1]
+            for cont in rest[1:]:
+                filename, content = cont.split("(")
+                content = content[: -1]
+                print(filename, content)
+                hashMap[content].append(f"{dir}/{filename}")
+        
+        print(hashMap)
+
+        return [ val for key, val in hashMap.items() if len(val) > 1]
                 
