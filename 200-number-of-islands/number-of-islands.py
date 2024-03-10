@@ -49,17 +49,15 @@ class UF:
     def Union(self,a,b):
         x = self.find(a)
         y = self.find(b)
-        print(x,y)
         if x != y:
-            self.state[x] = y
+            self.state[y] = x
             self.count -=1
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
 
         uf = UF(grid)
-        print(uf.count)
-        print(uf.state)
+
         
         dirs = [(-1,0),(1,0),(0,-1),(0,1)]
         r = len(grid)
@@ -73,6 +71,8 @@ class Solution:
                         new_x, new_y = x+i, y+j
                         if inbound_x and inbound_y and grid[new_x][new_y] == "1":
                             uf.Union(i*c+j , new_x * c + new_y)
+        print(uf.count)
+        print(uf.state)
         return uf.count
 
 
