@@ -58,49 +58,93 @@
 
 # Through this approach, the crawler efficiently navigates the site, respecting domain boundaries and avoiding redundant fetches, all while leveraging the concurrency offered by multithreading to accelerate the crawling process.
 # host = 'http://'+startUrl.split('/')[2]
+# from concurrent.futures import ThreadPoolExecutor, as_completed
+# from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from urllib.parse import urlparse
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from collections import deque
 
 class Solution:
     def crawl(self, startUrl: str, htmlParser: 'HtmlParser') -> List[str]:
-        # Extract the hostname from the starting URL to ensure we only follow internal links.
-        host_name = urlparse(startUrl).hostname
-        
-        # Initialize a set for visited URLs to avoid re-crawling the same pages.
+        get_hostname = lambda url: url.split("/")[2]
+        hostname = get_hostname(startUrl)
+
         visited = set([startUrl])
+        with ThreadPoolExecutor(max_workers=10) as ex:
+            dq = deque([ex.submit(htmlParser.getUrls, startUrl)])
+
+            while dq:
+                # Wait for the next future to complete
+                for future in as_completed(dq):
+                    # Remove the completed future from the deque
+                    dq.remove(future)
+
+                    # Process the URLs from the completed future
+                    current = future.result()
+                    for curr in current:
+                        if curr not in visited and get_hostname(curr) == hostname:
+                            visited.add(curr)
+                            dq.append(ex.submit(htmlParser.getUrls, curr))
+
+        return list(visited)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # # Extract the hostname from the starting URL to ensure we only follow internal links.
+        # host_name = urlparse(startUrl).hostname
+        # hostname = lambda url: url.split("/")[2]
+        # # print(startUrl.split("/"))
+        # # print(hostname(startUrl))
         
-        # Initialize a list to store the results, i.e., all crawled URLs.
-        result = []
+        # # Initialize a set for visited URLs to avoid re-crawling the same pages.
+        # visited = set([startUrl])
         
-        # Initialize a ThreadPoolExecutor to manage a pool of threads.
-        # max_workers defines the maximum number of threads that can run concurrently.
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            # Create an initial set of future tasks. Start by fetching URLs from the startUrl.
-            tasks = {executor.submit(htmlParser.getUrls, startUrl)}
+        # # Initialize a list to store the results, i.e., all crawled URLs.
+        # result = []
+        
+        # # Initialize a ThreadPoolExecutor to manage a pool of threads.
+        # # max_workers defines the maximum number of threads that can run concurrently.
+        # with ThreadPoolExecutor(max_workers=10) as executor:
+        #     # Create an initial set of future tasks. Start by fetching URLs from the startUrl.
+        #     tasks = {executor.submit(htmlParser.getUrls, startUrl)}
             
-            # Continue processing as long as there are pending tasks.
-            while tasks:
-                # as_completed() provides an iterator that yields futures as they complete.
-                done = set(as_completed(tasks))
+        #     # Continue processing as long as there are pending tasks.
+        #     while tasks:
+        #         # as_completed() provides an iterator that yields futures as they complete.
+        #         done = set(as_completed(tasks))
                 
-                # Remove the completed tasks from the tasks set.
-                tasks.difference_update(done)
+        #         # Remove the completed tasks from the tasks set.
+        #         tasks.difference_update(done)
                 
-                # Iterate through the completed futures.
-                for future in done:
-                    # Iterate through URLs fetched by the HtmlParser for a given page.
-                    for url in future.result():
-                        # Check if the URL has not been visited and belongs to the same host.
-                        if url not in visited and urlparse(url).hostname == host_name:
-                            # Mark the URL as visited.
-                            visited.add(url)
-                            # Add a new task to fetch URLs from this newly discovered page.
-                            tasks.add(executor.submit(htmlParser.getUrls, url))
-                            # Add the URL to the result list.
-                            result.append(url)
+        #         # Iterate through the completed futures.
+        #         for future in done:
+        #             # Iterate through URLs fetched by the HtmlParser for a given page.
+        #             for url in future.result():
+        #                 # Check if the URL has not been visited and belongs to the same host.
+        #                 if url not in visited and urlparse(url).hostname == host_name:
+        #                     # Mark the URL as visited.
+        #                     visited.add(url)
+        #                     # Add a new task to fetch URLs from this newly discovered page.
+        #                     tasks.add(executor.submit(htmlParser.getUrls, url))
+        #                     # Add the URL to the result list.
+        #                     result.append(url)
         
-        # Return the list of crawled URLs, starting with the initial URL.
-        return [startUrl] + result
+        # # Return the list of crawled URLs, starting with the initial URL.
+        # return [startUrl] + result
 
 
         
