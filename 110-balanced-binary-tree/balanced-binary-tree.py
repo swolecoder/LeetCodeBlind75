@@ -14,7 +14,9 @@ class Solution:
             left = dfs(node.left)
             right = dfs(node.right)
             cal = left[0] and right[0] and abs(left[1]-right[1]) < 2
-
-            return [cal, max(left[1],right[1]) +1]
+            if call == False:
+                return [False, 0]
+            else:
+                return [cal, max(left[1],right[1]) +1]
         return dfs(root)[0]
         
