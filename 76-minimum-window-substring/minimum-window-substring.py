@@ -1,66 +1,52 @@
+from collections import Counter
+
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
+        c1 = Counter(t)
+        c2 = {}
 
-        needM = Counter(t)
-        haveM = {}
-        ans = ""
-        ansL = float("inf")
-        need = len(needM)
-        have = 0
-        ans = ""
-        ansL = float("inf")
-        l = 0
+        have, need = 0, len(c1)  # need should be the number of unique characters in t
 
+        res = [0, 0]
+        resL = float("inf")
+        left = 0
 
         for r in range(len(s)):
-            # keep increaing r until we have and eneed are met 
-            haveM[s[r]] = haveM.get(s[r], 0) + 1
-         
-            if s[r] in needM and haveM[s[r]] == needM[s[r]]:
-                have +=1
-                
+            ch = s[r]
+            c2[ch] = c2.get(ch, 0) + 1
+
+            if ch in c1 and c2[ch] == c1[ch]:
+                have += 1
 
             while have == need:
-                chr = s[l:r+1]
-                if (r-l +1) < ansL:
-                    print("Ashish")
-                    ansL = r-l +1
-                    ans = chr
-                haveM[s[l]] = haveM[s[l]] -1
+                if (r - left + 1) < resL:  # Update the window if the current one is smaller
+                    resL = r - left + 1
+                    res = [left, r]
 
-                if s[l] in needM and haveM[s[l]] < needM[s[l]]:
-                    have -=1
+                c2[s[left]] -= 1
+                if s[left] in c1 and c2[s[left]] < c1[s[left]]:
+                    have -= 1
+
+                left += 1
+
+        l, r = res
+        return s[l:r+1] if resL != float("inf") else ""  # Ensure to return the correct substring
+
                 
-                l +=1
-        return ans
-                
-                
- 
-            
-
-        # countT = Counter(t)
-        # print(countT)
-        # n = len(countT)
-        # print("Ranjan", n)
-        # ans = ""
-        # l = float("inf")
 
 
-        # def helper(str):
-        #     print(str)
-        #     for k, v in countT.items():
-        #         print(k,v)
-        #         if k not in str or str[k] < v:
-        #             return False
-        #     return True
 
-        # for i in range(len(s)):
-        #     for j in range(len(s)):
-        #         word = s[i:j+1] 
-        #         print(word)
 
-        #         if helper(Counter(word)):
-        #             if len(word)  < l:
-        #                 ans = word
-        #                 l = len(word)
-        # return ans
+
+
+
+
+
+
+
+
+
+
+
+
+        
