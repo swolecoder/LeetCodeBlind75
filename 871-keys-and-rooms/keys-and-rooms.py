@@ -1,25 +1,32 @@
+from collections import deque
 class Solution:
     def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
-        n = len(rooms)
-        map = defaultdict(list)
 
-        for i in range(n):
-            map[i].append(rooms[i])
-        print(map)      
+        seen = [False] * len(rooms)
 
-        seen = set()
-        def dfs(room):
+        q = deque([0])
+        seen[0] = True
 
-            if room in seen:
-                return 
+        
+        while q:
+            node = q.popleft()
+            print(node)
+            print(rooms[node])
 
-            seen.add(room)
+            for nei in rooms[node]:
+                if seen[nei] != True:
+                    q.append(nei)
+                    seen[nei] = True
+        
 
-            for r in map[room]:
-                for i in r:
-                    if i not in seen:
-                        dfs(i) 
-
-        dfs(0)
         print(seen)
-        return len(seen) == n 
+        if all(seen):
+            return True
+        
+        return False
+
+
+
+       
+
+        
