@@ -1,31 +1,35 @@
+class UF:
+    def __init__(self,edges,n):
+        self.parent = [i for i in range(n)]
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        
+        return self.parent[x]
+    
+    def union(self, x,y):
+        A = self.find(x)
+        B = self.find(y)
+
+        if A == B:
+            return False
+        
+        self.parent[B] = A
+
+
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
-        parent = [ i for i in range(n)]
-
         if len(edges) != n-1:
             return False
-
-        def find(a):
-            if parent[a] != a:
-                parent[a] = find(parent[a])
-            
-            return parent[a]
         
-        def union(a,b):
-            A = find(a)
-            B = find(b)
+        uf = UF(edges, n)
 
-            if A == B:
-                return False
-            
-            parent[B] = A
-
-            return True
-        
-
-        for a, b in edges:
-            if not union(a,b):
+        for a,b in edges:
+            if uf.union(a,b) == False:
                 return False
         
         return True
+    
+
         
