@@ -1,3 +1,4 @@
+from collections import defaultdict
 class UF:
     def __init__(self,edges,n):
         self.parent = [i for i in range(n)]
@@ -23,13 +24,40 @@ class Solution:
         if len(edges) != n-1:
             return False
         
-        uf = UF(edges, n)
+        # uf = UF(edges, n)
 
-        for a,b in edges:
-            if uf.union(a,b) == False:
-                return False
+        # for a,b in edges:
+        #     if uf.union(a,b) == False:
+        #         return False
         
-        return True
+        # return True
+
+        map = defaultdict(list)
+        for a, b in edges:
+            map[a].append(b)
+            map[b].append(a)
+        seen = set()
+        
+        def dfs(node, previos):
+            if node in seen:
+                return False
+
+            seen.add(node)
+
+            for nei in map[node]:
+                if nei != previos and dfs(nei,node) == False:
+                    return False
+            
+            return True
+        
+              # Start DFS from node 0 (arbitrarily chosen)
+        if not dfs(0, -1):
+            return False
+        
+        return  len(seen) == n
     
+
+
+
 
         
