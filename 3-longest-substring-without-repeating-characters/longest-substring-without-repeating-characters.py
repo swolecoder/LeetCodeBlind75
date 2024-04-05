@@ -1,17 +1,20 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        map = defaultdict(int)
 
-        ans = 0
+        hashMap = {}
         left = 0
+        ans = 0
 
-        for i in range(len(s)):
+        for r in range(len(s)):
+
+            if s[r] in hashMap:
+                #do soemthing
+                left = max(left, hashMap[s[r]]+1)
             
-            if s[i] in map:
-                #adjest lefdft 
-                left = max(left , map[s[i]]+1)
+            hashMap[s[r]] = r
+            ans = max(ans, r - left +1)
+        
+        return ans
 
-            map[s[i]] = i
-            ans = max(ans, i - left +1)
 
-        return ans 
+        
