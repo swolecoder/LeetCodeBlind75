@@ -8,8 +8,7 @@ class Solution:
         negative = False
         i = 0
         if s and s[i] == "+" or s[i] == "-":
-            if s[i] == "-":
-                negative = True
+            negative = s[i] == "-"
             i +=1
         
      
