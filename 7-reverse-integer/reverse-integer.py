@@ -12,7 +12,7 @@ class Solution:
         res = 0
 
         maxNumber = 2 ** 31 -1
-        minNumber = -1 * 2 ** 31
+        # minNumber = -1 * 2 ** 31
 
         while x > 0:
 
