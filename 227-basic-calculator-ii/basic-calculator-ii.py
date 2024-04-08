@@ -1,40 +1,36 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        sign ="+"
+        sign = "+"
         s += "+"
-        curr  = 0
         stack = []
+        curr = ""
 
 
         for i in range(len(s)):
-            if s[i] == " ":
-                continue
             if s[i].isdigit():
-                curr = curr * 10 + int(s[i])
-            elif s[i] in ["*","/","+","-"]:
+                curr += s[i]
+                i +=1
+            elif s[i] in ["+","-","*","/"]:
                 if sign == "+":
-                    stack.append(curr)
-                elif sign =="-":
-                    stack.append(-1* curr)
+                    stack.append(int(curr))
+                elif sign == "-":
+                    stack.append(-1 * int(curr))
                 elif sign == "*":
                     last = stack.pop()
-                    stack.append(last * curr)
+                    stack.append(last * int(curr))
                 else:
                     last = stack.pop()
-                    if last // curr < 0 and last % curr != 0:
-                        stack.append(last // curr + 1)
-                    else:
-                        stack.append(last // curr)
-                
-                sign = s[i]
-                curr = 0
-        print(stack)
 
+                    if last // int(curr) < 0 and (last % int(curr)) != 0:
+                        stack.append(last // int(curr) + 1)
+                    else:
+                        stack.append(last // int(curr))
+
+                
+                curr = ""
+                sign = s[i]
+
+        print(stack)
         return sum(stack)
 
-
-
-
-
-
-
+        
