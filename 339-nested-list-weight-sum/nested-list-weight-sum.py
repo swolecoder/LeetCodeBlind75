@@ -42,44 +42,22 @@
 #        """
 from collections import deque
 class Solution:
-    def __init__(self):
-        self.ans = 0
-
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        # self.depth(nestedList)
-        # return self.ans
 
+        q = deque([(item, 1) for item in nestedList])  # Initialize queue with the list and level 1
         ans = 0
-        q = nestedList
-        level = 1
-        while q:
 
-            nextItem = []
-            length = len(q)
-            for i in range(length):
-                node = q.pop(0)
-                if node.isInteger():
-                    ans += node.getInteger() * level 
-                else:
-                    nextItem.extend(node.getList())
-            
-            level +=1
-            q = nextItem
+        while q:
+            nextItem, level = q.popleft()  # Get the next item and its level
+            if nextItem.isInteger():
+                ans += nextItem.getInteger() * level  # If it's an integer, add to the sum
+            else:
+                # If it's a list, extend the queue with the items in the list, each with incremented level
+                for item in nextItem.getList():
+                    q.append((item, level + 1))
+        
         return ans
 
 
-
-
-
-
-
-
-    # def depth(self, nums, level=1):
-
-    #     for n in nums:
-    #         if n.isInteger():
-    #             self.ans += n.getInteger() * level
-    #         else:
-    #             self.depth(n.getList(), level + 1)
 
         
