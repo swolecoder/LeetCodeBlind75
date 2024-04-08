@@ -17,8 +17,4 @@ class Solution:
                 i +=1
                 j +=1
         return i == len(word) and j == len(abbr)
-
-                
-
-
         
