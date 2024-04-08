@@ -22,10 +22,9 @@ class Solution:
                     last = stack.pop()
 
                     if last // int(curr) < 0 and (last % int(curr)) != 0:
-                        stack.append(last // int(curr) + 1)
+                        stack.append(last //int(curr) + 1)
                     else:
-                        stack.append(last // int(curr))
-
+                        stack.append(last//int(curr))
                 
                 curr = ""
                 sign = s[i]
