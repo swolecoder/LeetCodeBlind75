@@ -1,10 +1,14 @@
 class Solution:
     def findBuildings(self, heights: List[int]) -> List[int]:
-        runner = float('-inf')
+        left_max = float("-inf")
+
+
         ans = []
 
         for i in range(len(heights)-1,-1,-1):
-            if heights[i] > runner:
+            if heights[i] > left_max:
                 ans.append(i)
-            runner = max(runner, heights[i])
-        return reversed(ans)
+            left_max = max(left_max, heights[i])
+        
+        return ans[::-1]
+        
