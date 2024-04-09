@@ -7,23 +7,27 @@ class Solution:
 
         # 2 ^ 4 = 2 ^ 2 * 2 ^ 2
 
-        # 2 ^ 2 = 2 ^ 1 + 2 ^ 1
+        # 2 ^2=2 ×2
 
-        # 2 ^ 1 = 2 ^ 0 + 2 ^ 0 = 1
-
+        # 2 ^ 1 = 2 
+        # 2 ^ 0 = 1
 
         def helper(x, n):
-
-            if n <= 0:
+            if n == 0:
                 return 1
+            if n == 1:
+                return x
             
             if n % 2 == 0:
-                temp = helper(x, n//2)
+                temp = helper(x , n//2)
                 return temp * temp
-            else: 
-                return x * helper(x, n-1)
+            else:
+                return x * helper(x,n-1)
         
-        return 1 /helper(x,abs(n)) if n < 0 else helper(x,abs(n))
-        
+        if n < 0:
+            return 1/ helper(x, abs(n))
+        else:
+            return helper(x,n)
+
 
         
