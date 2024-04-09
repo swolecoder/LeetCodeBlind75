@@ -10,15 +10,15 @@ class Solution:
 
 
 
-        def dfs(node, parent):
+        def dfs(node):
             if not node:
                 return None
             
             if node.val == p.val or node.val == q.val:
                 return node
             
-            left = dfs(node.left, node)
-            right = dfs(node.right, node)
+            left = dfs(node.left)
+            right = dfs(node.right)
 
             if left and right:
                 return node
@@ -27,5 +27,5 @@ class Solution:
                 return left
             else:
                 return right
-        return dfs(root, root)
+        return dfs(root)
         
