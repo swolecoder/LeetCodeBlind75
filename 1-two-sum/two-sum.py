@@ -1,12 +1,13 @@
 from collections import defaultdict
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashMap = defaultdict(int)
+        map = defaultdict(int)
 
-        for i in range(len(nums)):
-            y = target  - nums[i]
-            if y in hashMap:
-                return [hashMap[y], i]
-            hashMap[nums[i]] = i
+        for index, num  in enumerate(nums):
+            y = target - num
+            if y in map:
+                return [map[y], index]
+            map[num] = index
         
         return [-1,-1]
+        
