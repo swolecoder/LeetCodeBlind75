@@ -1,32 +1,30 @@
 class Solution:
-    # O(n*m) dfs 4 ^ len(word)
     def exist(self, board: List[List[str]], word: str) -> bool:
-        ROW = len(board)
-        COL = len(board[0])
-        path = set()
 
-        def dfs(r,c, i):
-            if i == len(word):
+        R = len(board)
+        C = len(board[0])
+
+        def dfs(index, r, c, seen):
+            if index == len(word):
                 return True
-            if r < 0 or c < 0 or r >= ROW or c >=COL or (r,c) in path or word[i] != board[r][c]:
+
+            if not (0 <= r < R) or not (0 <= c < C) or (r, c) in seen or word[index] != board[r][c]:
                 return False
             
-            path.add((r,c))
+            seen.add((r, c))
+            
+            if (dfs(index + 1, r - 1, c, seen) or
+                dfs(index + 1, r, c - 1, seen) or
+                dfs(index + 1, r + 1, c, seen) or
+                dfs(index + 1, r, c + 1, seen)):
+                return True
+            
+            # Backtrack
+            seen.remove((r, c))
+            return False
 
-            res = dfs(r+1,c, i+1) or  dfs(r,c+1, i+1) or  dfs(r-1,c, i+1) or  dfs(r,c-1, i+1)
-            path.remove((r,c))
-            return res
-        
-
-        for i in range(ROW):
-            for j in range(COL):
-                if dfs(i,j,0):
+        for i in range(R):
+            for j in range(C):
+                if dfs(0, i, j, set()) and board[i][j] == word[0]:
                     return True
         return False
-   
-
-
-            
-
-
-
