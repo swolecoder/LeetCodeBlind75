@@ -4,29 +4,35 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
 class BSTIterator:
 
     def __init__(self, root: Optional[TreeNode]):
-        self.list = []
-        curr = root
-        while curr:
-            self.list.append(curr)
-            curr = curr.left
+        self.data = deque()
+        self.dfs(root)
+    
+
+
+    def dfs(self, root):
+        if not root:
+            return 
+        self.dfs(root.left)
+        self.data.append(root.val)
+        self.dfs(root.right)
         
 
     def next(self) -> int:
-        curr = self.list.pop()
-        node = curr.right
-        while node:
-            self.list.append(node)
-            node = node.left
+        if self.data:
+            return self.data.popleft()
 
+        return -1
 
-        return curr.val
         
 
     def hasNext(self) -> bool:
-        return len(self.list) != 0
+        if self.data:
+            return True
+        return False
         
 
 
