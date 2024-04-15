@@ -1,16 +1,23 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        num = [ int(n) for n in str(num)]
-        print(num)
-        hashmap ={val:index for index , val in enumerate(num)}
+
+        data = [int(n) for n in str(num)]
+        print(data)
+        hashmap = {}
+
+        for index, num in enumerate(data):
+            hashmap[num] = index
         print(hashmap)
 
 
-        for index,val in enumerate(num):
-            for n in range(9,val,-1):
-                if n in hashmap and hashmap[n] > index:
-                    num[index], num[hashmap[n]] = num[hashmap[n]],num[index]
+        for indx, n in enumerate(data):
+            for i in range(9, n,-1):
+                if i in hashmap and hashmap[i] > indx:
+                    data[indx] ,  data[hashmap[i]]=  data[hashmap[i]], data[indx] 
+                    # data[hashmap[i]] = n 
+                    print(data)
+                    return int(''.join(map(str,data)))
+                   
 
-                    return int(''.join(map(str,num)))
-        return int(''.join(map(str,num))) 
+        return int(''.join(map(str,data)))
         
