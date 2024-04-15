@@ -1,39 +1,38 @@
-from collections import Counter
-from typing import List
-
 class Solution:
     def minStickers(self, stickers: List[str], target: str) -> int:
-        sticker_maps = [Counter(sticker) for sticker in stickers]
+        hashMap =[Counter(sticker) for sticker in stickers]
+        print(hashMap)
+
         memo = {}
 
-        def dfs(remaining_target_str):
-            if remaining_target_str in memo:
-                return memo[remaining_target_str]
-            if not remaining_target_str:
+        def helper(target_string, memo):
+            if target_string in memo:
+                return memo[target_string]
+            
+            if not target_string:
                 return 0
+            
+            remaining = Counter(target_string)
+            ans = float("inf")
 
-            ans = float('inf')
-            remaining_target_count = Counter(remaining_target_str)
-
-            for sticker in sticker_maps:
-               # Skip stickers that don't contribute to the target.
-                # if remaining_target_str[0] not in sticker:
-                #     continue
-                if not any( ch in remaining_target_count for ch in sticker):
-                    continue 
-
-                # Attempt to use the sticker to reduce the target string.
-                new_target_count = remaining_target_count - sticker
+            for data in hashMap:
+                if not any( ch in remaining for ch in data):
+                    continue
                 
-                new_target_str = ''.join(ch * new_target_count[ch] for ch in new_target_count)
-                next_dfs = dfs(new_target_str)
-                
-                # if next_dfs != -1:
-                ans = min(ans, 1 + next_dfs)
+                left = remaining - data
 
-            memo[remaining_target_str] = ans
-            return memo[remaining_target_str]
+                left_string = [ k * v for k,v in left.items()]
+                ans = min(ans, 1+ helper(''.join(left_string), memo))
+                # memo[target_string] = ans 
+            
+            memo[target_string] = ans
+            return ans 
         
-        # return dfs(target)
-        call = dfs(target)
-        return -1 if  call == float('inf') else call
+        data = helper(target, memo)
+        print(data)
+        if data == float("inf"):
+            return -1
+        return data
+
+
+        
