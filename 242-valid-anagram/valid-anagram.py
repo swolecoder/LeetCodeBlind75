@@ -1,23 +1,24 @@
+from collections import defaultdict
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        map = {}
+        hashMap = defaultdict(int)
 
-        if len(s)!= len(t): return False
+        if len(s) != len(t):
+            return False
 
-        for i in range(len(s)):
-            map[s[i]] = map.get(s[i], 0) + 1
+        for ch in s:
+            hashMap[ch] = hashMap.get(ch,0) +1
+        print(hashMap)
+
+        for ch in t:
+            if ch not in hashMap:
+                return False
+            hashMap[ch] = hashMap.get(ch,0) -1
+
+            if hashMap[ch]  <= 0:
+                del hashMap[ch]
         
-        for j in range(len(t)):
+        return True 
 
-            map[t[j]] = map.get(t[j], 0) -1
-
-            if map[t[j]] <= 0:
-                del map[t[j]]
         
-
-    
-        
-        print(map)
-
-        return True if len(map.keys()) <= 0 else False
         
