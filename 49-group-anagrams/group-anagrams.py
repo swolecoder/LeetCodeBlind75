@@ -3,12 +3,15 @@ class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         map = defaultdict(list)
 
-        for word in strs:
-            sort = [0] * 26
-            for j in range(len(word)):
-                 key  = ord(word[j]) - ord('a')
-                 sort[key] +=1
-            map[tuple(sort)].append(word)
-        return map.values()
 
+        for index, word in enumerate(strs):
+            data = [0] * 26
+            for i in range(len(word)):
+                data[ord(word[i]) - ord('a')] +=1
+            
+            map[tuple(data)].append(word)
+        
+        print(map)
+
+        return map.values()
         
