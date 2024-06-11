@@ -1,20 +1,19 @@
+from collections import defaultdict
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-
-        hashMap = {}
-        left = 0
+        map = defaultdict(int)
         ans = 0
+        left = 0
 
-        for r in range(len(s)):
-
-            if s[r] in hashMap:
-                #do soemthing
-                left = max(left, hashMap[s[r]]+1)
+        for right, char in enumerate(s):
             
-            hashMap[s[r]] = r
-            ans = max(ans, r - left +1)
+
+            if char in map:
+                #dop stuiff
+                left = max(map[char] +1 , left)
+            ans = max(ans, right - left +1)
+            map[char] = right 
+        return ans 
+
         
-        return ans
-
-
         
