@@ -1,16 +1,21 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        map = {}
-        l = 0
-        res = 0
 
-        for i in range(len(s)):
-            map[s[i]] = map.get(s[i], 0) + 1
+        left = 0
+        map = defaultdict(int)
+        ans = 0
 
-            if (i - l +1) - max(map.values()) > k:
-                map[s[l]] = map[s[l]] -1
-                l +=1
+        for right in range(len(s)):
+            map[s[right]] = map.get(s[right], 0) +1
+            while (right -left +1) - max(map.values()) > k:
+                map[s[left]] -=1
+                if map[left] == 0:
+                    del map[left]
+                left +=1
             
-            res = max(res, i-l +1)
-        return res 
-        
+            
+            ans = max(ans, right -left +1)
+        return ans
+
+
+
