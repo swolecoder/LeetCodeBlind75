@@ -1,12 +1,13 @@
 class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
-        f = [0] + flowerbed + [0]
 
-        for i in range(1, len(f)-1):
-            if not f[i-1] and not f[i] and not f[i+1] and n:
-                f[i] = 1
+        flower = [0] + flowerbed + [0]
+
+        for i in range(1, len(flower)-1):
+            if not flower[i-1]  and not flower[i] and not flower[i+1] and n > 0:
+                flower[i] = 1
                 n -=1
-                if n == 0:
-                    break
+        print(flower)
+        print(n)
         return n == 0
         
